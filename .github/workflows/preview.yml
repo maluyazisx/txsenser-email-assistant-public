@@ -1,0 +1,44 @@
+name: Synthetic source-mail preview
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: email-preview-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+jobs:
+  preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.13'
+      - name: Check exported reader and rebuild the static page
+        run: |
+          node tests/g1g2.cjs
+          python -B tests/check_preview.py
+      - name: Prepare only the browser driver
+        run: npm install --prefix "$RUNNER_TEMP/preview-driver" --no-save --ignore-scripts playwright@1.55.1
+      - name: Check two browser sizes using synthetic data
+        env:
+          NODE_PATH: ${{ runner.temp }}/preview-driver/node_modules
+          CHROME_PATH: /usr/bin/google-chrome
+        run: node tests/browser.cjs
+      - name: Retain the preview and synthetic screenshots
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: email-synthetic-preview-${{ github.sha }}
+          path: |
+            preview/index.html
+            test-results/desktop.png
+            test-results/narrow.png
+          if-no-files-found: error
+          retention-days: 7
