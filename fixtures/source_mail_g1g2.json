@@ -9,7 +9,7 @@
     "cards": [
       {
         "key": "matter:synthetic:g1g2",
-        "title": "合成源邮件阅读",
+        "title": "邮件阅读示例",
         "area": "待处理事项",
         "status": "合成待核实",
         "source_refs": [],
@@ -31,20 +31,20 @@
               "source_revision": "83b6c808b712c48eff5329592d3158a60de2a5bf791b2edff485a37e67ab6dcc",
               "sender": "示例发件人 A",
               "sent_at": "2026-10-09T09:00:00Z",
-              "subject": "合成源邮件 ALPHA",
+              "subject": "客户邮件示例（虚构）",
               "availability": "available",
               "original": {
                 "source_id": "synthetic:mail:alpha",
                 "source_revision": "83b6c808b712c48eff5329592d3158a60de2a5bf791b2edff485a37e67ab6dcc",
                 "status": "complete",
-                "text": "Dear Example Team,\n\nParagraph 1: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 2: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 3: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 4: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 5: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 6: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 7: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 8: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 9: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 10: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 11: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 12: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 13: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 14: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 15: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 16: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 17: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 18: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nLong body end: 27 pieces.",
+                "text": "Dear Example Team,\n\nParagraph 1: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 2: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 3: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 4: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 5: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 6: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 7: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 8: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 9: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 10: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 11: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 12: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 13: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 14: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 15: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 16: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 17: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 18: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nLong body end: 27 pieces.",
                 "reason": ""
               },
               "translation": {
                 "source_id": "synthetic:mail:alpha",
                 "source_revision": "83b6c808b712c48eff5329592d3158a60de2a5bf791b2edff485a37e67ab6dcc",
                 "status": "complete",
-                "text": "示例团队：\n\n第1段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第2段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第3段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第4段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第5段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第6段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第7段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第8段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第9段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第10段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第11段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第12段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第13段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第14段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第15段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第16段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第17段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第18段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n长文结束：27 件。",
+                "text": "示例团队：\n\n第1段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第2段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第3段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第4段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第5段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第6段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第7段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第8段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第9段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第10段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第11段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第12段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第13段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第14段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第15段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第16段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第17段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第18段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n长文结束：27 件。",
                 "reason": ""
               }
             },
@@ -53,7 +53,7 @@
               "source_revision": "22a09c62d25404a4411d0253c88607351c983ce52a18932fa02fc431256d3111",
               "sender": "示例发件人 B",
               "sent_at": "2026-10-08T07:00:00Z",
-              "subject": "合成源邮件 BETA",
+              "subject": "此前往来示例（虚构）",
               "availability": "available",
               "original": {
                 "source_id": "synthetic:mail:beta",
@@ -75,7 +75,7 @@
       },
       {
         "key": "matter:synthetic:no-source",
-        "title": "尚未提供源邮件的事项",
+        "title": "暂无邮件内容的事项",
         "area": "待处理事项",
         "status": "合成待核实",
         "source_refs": [],

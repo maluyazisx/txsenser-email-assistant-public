@@ -23,5 +23,5 @@ assert not re.search(r'<(?:script|link|img|iframe)\b[^>]*(?:src|href)\s*=', html
 fixture = json.loads((root / 'fixtures/source_mail_g1g2.json').read_text())
 assert fixture['demonstration'] is True
 assert all(card['key'].startswith('matter:synthetic:') for card in fixture['snapshot']['cards'])
-assert '同源英文原文' in html and '长文结束：27 件。' in html
+assert '查看英文原文' in html and '长文结束：27 件。' in html
 print('Preview wrapper: reproducible, synthetic fixture, CSP hashes valid, no external resource tags')

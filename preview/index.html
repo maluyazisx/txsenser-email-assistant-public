@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Cvp5GicQD8ncABW5vdzdRlJU9XAbY8U65Bo8ip6mrUk='; style-src 'sha256-8VgQ7xVPczEnHZAIU/KJzik+/f3i69bhT2zcTPXZg+8='; connect-src 'none'; img-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; form-action 'none'; base-uri 'none'">
-<title>TxSenser Email · 源邮件阅读示例</title><style>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-uMvVA8dGYO7sJ5gq0sD1yfTJ7hJXvaczCpBWF8fJrTo='; style-src 'sha256-8VgQ7xVPczEnHZAIU/KJzik+/f3i69bhT2zcTPXZg+8='; connect-src 'none'; img-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; form-action 'none'; base-uri 'none'">
+<title>TxSenser Email · 邮件阅读示例</title><style>
 :root{--line:#d7e4dd;font-family:system-ui,-apple-system,sans-serif;color:#183b2c;background:#f3f7f4}
 *{box-sizing:border-box}body{margin:0}main{max-width:1000px;margin:auto;padding:30px 24px}
 h1{font-size:28px;line-height:1.4;margin:8px 0}.eyebrow{font-size:13px;letter-spacing:.08em;color:#587364}
@@ -29,15 +29,15 @@ button:focus-visible,summary:focus-visible{outline:3px solid #e6a03b;outline-off
 @media(max-width:850px){.source-mail-reader{padding:12px}.source-mail-meta{display:block}.source-mail-body{font-size:15px}}
 </style></head>
 <body><main>
-<div class="eyebrow">TXSENSER EMAIL</div><h1>源邮件阅读</h1>
+<div class="eyebrow">TXSENSER EMAIL</div><h1>阅读客户邮件</h1>
 <p class="intro">先读中文，再按需查看同一封邮件的英文原文和已提供的历史往来。</p>
 <p class="intro">当前是虚构示例，不连接真实邮箱。中文译文已预先提供。</p>
 <p class="intro"><a href="business.html">体验下一步：处理一件虚构客户询盘，判断回复并编辑英文草稿</a></p>
 <nav class="examples" aria-label="选择示例">
-<button type="button" data-example="0" aria-pressed="true">有源邮件的事项</button>
-<button type="button" data-example="1" aria-pressed="false">尚未提供源邮件的事项</button>
+<button type="button" data-example="0" aria-pressed="true">查看邮件示例</button>
+<button type="button" data-example="1" aria-pressed="false">暂无邮件内容的示例</button>
 </nav><div id="reader"></div>
-<footer>此页展示源邮件阅读这一项能力。不会读取、发送或保存真实业务数据。</footer>
+<footer>此页展示邮件阅读这一项能力。不会读取、发送或保存真实业务数据。</footer>
 </main><script>/* G1/G2: supplied synthetic source records only; no transport or translation. */
 (() => {
   'use strict';
@@ -45,8 +45,8 @@ button:focus-visible,summary:focus-visible{outline:3px solid #e6a03b;outline-off
   const object=v=>v!==null&&typeof v==='object'&&!Array.isArray(v);
   const source=v=>typeof v==='string'&&/^synthetic:mail:[a-z0-9-]+$/.test(v);
   const revision=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
-  const labels={complete:'完整',partial:'部分内容',missing:'缺失',failed:'失败',binding_mismatch:'来源不匹配',header_only:'仅邮件头，正文未读取',unavailable:'来源不可用'};
-  const coverage={partial:'仅部分历史已提供',unread:'历史尚未读取',unavailable:'历史来源不可用',unknown:'历史覆盖范围未知'};
+  const labels={complete:'完整',partial:'部分内容',missing:'缺失',failed:'失败',binding_mismatch:'内容与当前邮件不一致',header_only:'仅邮件头，正文未读取',unavailable:'邮件暂不可用'};
+  const coverage={partial:'仅提供部分历史',unread:'历史邮件尚未读取',unavailable:'历史邮件暂不可用',unknown:'历史是否完整尚不确定'};
   function timestamp(value){
     if(typeof value!=='string'||!/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d{3})?Z$/.test(value))return null;
     const n=Date.parse(value);
@@ -73,9 +73,9 @@ button:focus-visible,summary:focus-visible{outline:3px solid #e6a03b;outline-off
       if(row.availability!=='available'){
         original=translation=Object.freeze({status:row.availability,text:'',reason:''});
       }else if(!['complete','partial'].includes(original.status)&&['complete','partial'].includes(translation.status)){
-        translation=Object.freeze({status:'missing',text:'',reason:'原文正文尚不可核实，未将译文标为全文。'});
+        translation=Object.freeze({status:'missing',text:'',reason:'邮件英文正文暂无法核实，不能确认中文内容完整。'});
       }else if(original.status==='partial'&&translation.status==='complete'){
-        translation=Object.freeze({...translation,status:'partial',reason:'原文仅部分可用，译文不代表整封邮件。'});
+        translation=Object.freeze({...translation,status:'partial',reason:'只读到部分邮件，中文内容可能不完整。'});
       }
       messages.push(Object.freeze({source_id:row.source_id,source_revision:row.source_revision,
         sender:row.sender,subject:row.subject,sent_at:row.sent_at,time:timestamp(row.sent_at),
@@ -87,45 +87,48 @@ button:focus-visible,summary:focus-visible{outline:3px solid #e6a03b;outline-off
   const el=(tag,cls,text)=>{const n=document.createElement(tag);n.className=cls;if(text!==undefined)n.textContent=text;return n;};
   function metadata(row){
     const n=el('div','source-mail-meta');
-    n.append(el('p','','发件人：'+row.sender),el('p','',row.time===null?'时间未知：未提供可核实时间':'时间：'+row.sent_at),
-      el('p','','来源：'+row.source_id),el('p','','来源版本：'+row.source_revision));
+    const formatted=row.time===null?'待确认':new Date(row.time).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false})+'（北京时间）';
+    n.append(el('p','','发件人：'+row.sender),el('p','','时间：'+formatted));
     return n;
   }
   function render(value){
     const root=el('section','source-mail-reader');root.id='source-mail-reader';
-    root.setAttribute('aria-label','选中源邮件阅读');
-    if(!value){root.append(el('h3','','源邮件'),el('p','source-mail-state','当前没有可核实的选中源邮件正文；未使用摘要或其他邮件替代。'));return root;}
+    root.setAttribute('aria-label','邮件正文阅读');
+    if(!value){root.append(el('h3','','邮件正文'),el('p','source-mail-state','这件事尚未提供可阅读的邮件正文，不会显示其他邮件的内容。'));return root;}
     let selected=value.selected_source_id;
     function draw(){
       root.replaceChildren();
       const row=value.messages.find(m=>m.source_id===selected);
       const current=el('article','source-mail-current');current.dataset.sourceId=row.source_id;
-      current.append(el('h3','','当前选中邮件 · 源邮件中文译文'),el('p','source-mail-notice','这不是AI摘要、建议或英文回复的中文回译。'),
+      current.append(el('h3','','邮件正文（中文）'),
         el('h4','source-mail-subject',row.subject||'未提供主题'),metadata(row));
       const translated=row.translation;
-      current.append(el('p','source-mail-state','源邮件译文：'+labels[translated.status]+(translated.reason?' · '+translated.reason:'')));
+      if(translated.status!=='complete')current.append(el('p','source-mail-state','中文内容：'+labels[translated.status]+(translated.reason?' · '+translated.reason:'')));
       if(translated.text){const text=el('div','source-mail-body',translated.text);text.id='source-mail-chinese';current.append(text);}
-      else current.append(el('p','source-mail-missing','当前源邮件没有可展示的中文正文；未沿用旧译文。'));
-      const toggle=el('button','source-mail-original-toggle','查看同源英文原文');toggle.type='button';
+      else current.append(el('p','source-mail-missing','这封邮件暂时没有可展示的中文正文。'));
+      const toggle=el('button','source-mail-original-toggle','查看英文原文');toggle.type='button';
       toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-controls','source-mail-original');
       toggle.disabled=!['complete','partial'].includes(row.original.status);
       const original=el('section','source-mail-original');original.id='source-mail-original';original.hidden=true;
-      original.append(el('h4','','同源英文原文 · '+labels[row.original.status]),metadata(row),el('div','source-mail-body',row.original.text));
-      toggle.addEventListener('click',()=>{original.hidden=!original.hidden;toggle.setAttribute('aria-expanded',String(!original.hidden));toggle.textContent=original.hidden?'查看同源英文原文':'收起同源英文原文';});
-      current.append(toggle,el('p','source-mail-state','英文正文：'+labels[row.original.status]),original);root.append(current);
+      original.append(el('h4','','英文原文'),el('div','source-mail-body',row.original.text));
+      toggle.addEventListener('click',()=>{original.hidden=!original.hidden;toggle.setAttribute('aria-expanded',String(!original.hidden));toggle.textContent=original.hidden?'查看英文原文':'收起英文原文';});
+      current.append(toggle);
+      if(row.original.status!=='complete')current.append(el('p','source-mail-state','英文原文：'+labels[row.original.status]));
+      current.append(original);root.append(current);
       const history=el('details','source-mail-history');history.id='source-mail-history';history.open=false;
       const rows=value.messages.filter(m=>m.source_id!==selected);
-      const summary=el('summary','','历史往来（已提供 '+rows.length+' 封） · '+coverage[value.coverage]);
-      history.append(summary,el('p','source-mail-notice','仅展示已提供记录，不代表完整线程或完整翻译。展开、收起和切换不会读取或翻译更多邮件。'),
-        el('p','source-mail-order','可核实时间从早到晚；同一时间保持已提供顺序。未知时间单列，不推断先后。'));
+      const summary=el('summary','','历史邮件（'+rows.length+' 封已提供） · '+coverage[value.coverage]);
+      history.append(summary,el('p','source-mail-notice','这里只显示已提供的往来，历史记录可能不完整。'),
+        el('p','source-mail-order','有日期的邮件按时间先后排列，无法确认日期的单独列出。'));
       const known=rows.filter(m=>m.time!==null).sort((a,b)=>a.time-b.time),unknown=rows.filter(m=>m.time===null);
-      for(const [heading,group] of [['时间已知',known],['时间未知（先后未判定）',unknown]]){
+      for(const [heading,group] of [['按时间排列',known],['日期待确认的邮件',unknown]]){
         if(group.length)history.append(el('h4','',heading));
         for(const item of group){
           const entry=el('article','source-mail-history-entry');entry.dataset.sourceId=item.source_id;
-          entry.append(el('h5','',item.subject||'未提供主题'),metadata(item),
-            el('p','source-mail-state','英文正文：'+labels[item.original.status]+'；中文译文：'+labels[item.translation.status]));
-          const read=el('button','source-mail-select','阅读这封邮件');read.type='button';read.setAttribute('aria-label','阅读 '+item.source_id);
+          entry.append(el('h5','',item.subject||'未提供主题'),metadata(item));
+          if(item.original.status!=='complete'||item.translation.status!=='complete')
+            entry.append(el('p','source-mail-state','英文：'+labels[item.original.status]+'；中文：'+labels[item.translation.status]));
+          const read=el('button','source-mail-select','阅读这封邮件');read.type='button';read.setAttribute('aria-label','阅读邮件：'+(item.subject||'未提供主题'));
           read.addEventListener('click',()=>{selected=item.source_id;draw();root.querySelector('.source-mail-original-toggle').focus({preventScroll:true});});
           entry.append(read);history.append(entry);
         }
@@ -139,7 +142,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid #e6a03b;outline-off
 })();
 
 (() => {
-  const fixture = {"ok": true, "demonstration": true, "snapshot": {"read_at": "2026-10-24T00:00:00Z", "offset": 0, "low_total": 0, "next_offset": null, "cards": [{"key": "matter:synthetic:g1g2", "title": "合成源邮件阅读", "area": "待处理事项", "status": "合成待核实", "source_refs": [], "tags": [], "evidence": ["合成事项概要，不能代替源邮件全文。"], "advice": "核对来源内容。", "gaps": [], "reply": [], "references": [], "source_mail": {"matter_key": "matter:synthetic:g1g2", "selected_source_id": "synthetic:mail:alpha", "coverage": "partial", "messages": [{"source_id": "synthetic:mail:alpha", "source_revision": "83b6c808b712c48eff5329592d3158a60de2a5bf791b2edff485a37e67ab6dcc", "sender": "示例发件人 A", "sent_at": "2026-10-09T09:00:00Z", "subject": "合成源邮件 ALPHA", "availability": "available", "original": {"source_id": "synthetic:mail:alpha", "source_revision": "83b6c808b712c48eff5329592d3158a60de2a5bf791b2edff485a37e67ab6dcc", "status": "complete", "text": "Dear Example Team,\n\nParagraph 1: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 2: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 3: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 4: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 5: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 6: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 7: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 8: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 9: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 10: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 11: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 12: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 13: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 14: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 15: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 16: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 17: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nParagraph 18: Please keep the sample count at 27 pieces. This is a fictional source email for reading, not a reply or an instruction to send.\n\nLong body end: 27 pieces.", "reason": ""}, "translation": {"source_id": "synthetic:mail:alpha", "source_revision": "83b6c808b712c48eff5329592d3158a60de2a5bf791b2edff485a37e67ab6dcc", "status": "complete", "text": "示例团队：\n\n第1段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第2段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第3段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第4段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第5段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第6段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第7段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第8段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第9段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第10段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第11段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第12段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第13段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第14段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第15段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第16段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第17段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n第18段：请将样品数量保持为27件。这是供阅读的虚构源邮件，并非回复稿，也不是发送指令。\n\n长文结束：27 件。", "reason": ""}}, {"source_id": "synthetic:mail:beta", "source_revision": "22a09c62d25404a4411d0253c88607351c983ce52a18932fa02fc431256d3111", "sender": "示例发件人 B", "sent_at": "2026-10-08T07:00:00Z", "subject": "合成源邮件 BETA", "availability": "available", "original": {"source_id": "synthetic:mail:beta", "source_revision": "22a09c62d25404a4411d0253c88607351c983ce52a18932fa02fc431256d3111", "status": "complete", "text": "Hello Example A,\n\nPlease review only this earlier message.\n\nRegards, Example B", "reason": ""}, "translation": {"source_id": "synthetic:mail:beta", "source_revision": "22a09c62d25404a4411d0253c88607351c983ce52a18932fa02fc431256d3111", "status": "complete", "text": "示例A：\n\n请仅阅读这一封较早的邮件。\n\n示例B 敬上", "reason": ""}}]}}, {"key": "matter:synthetic:no-source", "title": "尚未提供源邮件的事项", "area": "待处理事项", "status": "合成待核实", "source_refs": [], "tags": [], "evidence": ["合成事项概要，不能代替源邮件全文。"], "advice": "核对来源内容。", "gaps": [], "reply": [], "references": []}], "notices": ["纯离线合成展示；无真实邮件或服务连接。"]}};
+  const fixture = {"ok": true, "demonstration": true, "snapshot": {"read_at": "2026-10-24T00:00:00Z", "offset": 0, "low_total": 0, "next_offset": null, "cards": [{"key": "matter:synthetic:g1g2", "title": "邮件阅读示例", "area": "待处理事项", "status": "合成待核实", "source_refs": [], "tags": [], "evidence": ["合成事项概要，不能代替源邮件全文。"], "advice": "核对来源内容。", "gaps": [], "reply": [], "references": [], "source_mail": {"matter_key": "matter:synthetic:g1g2", "selected_source_id": "synthetic:mail:alpha", "coverage": "partial", "messages": [{"source_id": "synthetic:mail:alpha", "source_revision": "83b6c808b712c48eff5329592d3158a60de2a5bf791b2edff485a37e67ab6dcc", "sender": "示例发件人 A", "sent_at": "2026-10-09T09:00:00Z", "subject": "客户邮件示例（虚构）", "availability": "available", "original": {"source_id": "synthetic:mail:alpha", "source_revision": "83b6c808b712c48eff5329592d3158a60de2a5bf791b2edff485a37e67ab6dcc", "status": "complete", "text": "Dear Example Team,\n\nParagraph 1: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 2: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 3: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 4: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 5: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 6: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 7: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 8: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 9: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 10: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 11: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 12: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 13: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 14: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 15: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 16: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 17: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nParagraph 18: Please keep the sample count at 27 pieces. This is a fictional email for reading, not a reply or an instruction to send.\n\nLong body end: 27 pieces.", "reason": ""}, "translation": {"source_id": "synthetic:mail:alpha", "source_revision": "83b6c808b712c48eff5329592d3158a60de2a5bf791b2edff485a37e67ab6dcc", "status": "complete", "text": "示例团队：\n\n第1段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第2段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第3段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第4段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第5段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第6段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第7段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第8段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第9段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第10段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第11段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第12段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第13段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第14段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第15段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第16段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第17段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n第18段：请将样品数量保持为27件。这是供阅读的虚构邮件，并非回复稿，也不是发送指令。\n\n长文结束：27 件。", "reason": ""}}, {"source_id": "synthetic:mail:beta", "source_revision": "22a09c62d25404a4411d0253c88607351c983ce52a18932fa02fc431256d3111", "sender": "示例发件人 B", "sent_at": "2026-10-08T07:00:00Z", "subject": "此前往来示例（虚构）", "availability": "available", "original": {"source_id": "synthetic:mail:beta", "source_revision": "22a09c62d25404a4411d0253c88607351c983ce52a18932fa02fc431256d3111", "status": "complete", "text": "Hello Example A,\n\nPlease review only this earlier message.\n\nRegards, Example B", "reason": ""}, "translation": {"source_id": "synthetic:mail:beta", "source_revision": "22a09c62d25404a4411d0253c88607351c983ce52a18932fa02fc431256d3111", "status": "complete", "text": "示例A：\n\n请仅阅读这一封较早的邮件。\n\n示例B 敬上", "reason": ""}}]}}, {"key": "matter:synthetic:no-source", "title": "暂无邮件内容的事项", "area": "待处理事项", "status": "合成待核实", "source_refs": [], "tags": [], "evidence": ["合成事项概要，不能代替源邮件全文。"], "advice": "核对来源内容。", "gaps": [], "reply": [], "references": []}], "notices": ["纯离线合成展示；无真实邮件或服务连接。"]}};
 
   const mount = document.getElementById('reader');
   function show(index) {

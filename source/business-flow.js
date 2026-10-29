@@ -19,7 +19,7 @@
   text('matter-next',data.matter.next_step);
   text('fact-suggestion',data.evidence.suggestion);
   text('fact-challenge',data.evidence.challenge);
-  for(const fact of data.evidence.facts)add('known-facts',fact.text+'〔来源：'+fact.source_id+'〕');
+  for(const fact of data.evidence.facts)add('known-facts',fact.text);
   for(const missing of data.evidence.unknown)add('unknown-facts',missing);
   let selected=data.strategies[0], changed=false;
   function showStep(step){

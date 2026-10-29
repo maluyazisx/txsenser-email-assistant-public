@@ -73,7 +73,7 @@ for(const kind of ['missing-selected','duplicate-source','wrong-matter','bad-rev
 });
 for(const field of ['source_id','source_revision'])test('mismatched translation '+field+' is withheld',()=>{
   const value=data();value.messages[0].translation[field]=b[field];
-  const view=show(value);assert.equal(view.querySelector('#source-mail-chinese'),null);assert.ok(view.textContent.includes('来源不匹配'));
+  const view=show(value);assert.equal(view.querySelector('#source-mail-chinese'),null);assert.ok(view.textContent.includes('内容与当前邮件不一致'));
 });
 for(const availability of ['header_only','unavailable'])test(availability+' suppresses body',()=>{
   const value=data();value.messages[0].availability=availability;
@@ -93,7 +93,7 @@ test('wrong-source original disables unsafe viewing',()=>{
 });
 test('unknown date and incomplete history remain explicit',()=>{
   const value=data();value.messages[1].sent_at='2026-02-30T00:00:00Z';
-  const view=show(value);assert.ok(view.textContent.includes('时间未知（先后未判定）'));assert.ok(view.textContent.includes('不代表完整线程'));
+  const view=show(value);assert.ok(view.textContent.includes('日期待确认的邮件'));assert.ok(view.textContent.includes('历史记录可能不完整'));
 });
 test('empty supplied history does not claim no history exists',()=>{
   const value=data();value.messages=value.messages.slice(0,1);assert.ok(show(value).textContent.includes('不能据此认定没有历史'));
@@ -104,6 +104,16 @@ test('hostile body is inert text',()=>{
   const view=show(value);view.querySelector('.source-mail-original-toggle').click();
   assert.equal(view.querySelector('#source-mail-chinese').textContent,marker);
   for(const tag of ['img','script','a','iframe'])assert.equal(view.querySelector(tag),null);
+});
+test('business text hides internal identifiers but retains source binding',()=>{
+  const view=show(),label=view.querySelector('.source-mail-select')['aria-label'];
+  assert.ok(view.textContent.includes('邮件正文（中文）'));
+  assert.ok(view.textContent.includes('示例发件人 A'));
+  assert.ok(!view.textContent.includes('来源版本：'));
+  assert.ok(!view.textContent.includes('synthetic:mail:'));
+  assert.ok(!/[a-f0-9]{64}/.test(view.textContent));
+  assert.ok(!label.includes('synthetic:mail:'));
+  assert.equal(normalize(data()).messages[0].source_revision,a.source_revision);
 });
 assert.deepEqual(effects,[]);
 console.log(JSON.stringify({status:'SOURCE_READER_COMPONENT_PASS',checks,side_effects:effects,limit:'Modeled DOM; no browser layout, real mail, translation quality, native integration or release claim'}));

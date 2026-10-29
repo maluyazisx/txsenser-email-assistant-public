@@ -18,8 +18,9 @@ for r in rows:
         assert r[k]['source_id']==r['source_id'] and r[k]['source_revision']==r['source_revision']
         assert r[k]['status']=='complete'
 assert {s['id'] for s in case['strategies']}=={'acknowledge','clarify'}
+assert all(fact['source_id'] in {r['source_id'] for r in rows} for fact in case['evidence']['facts'])
 assert all('12' in s['english'] and '12' in s['chinese'] for s in case['strategies'])
-assert hashlib.sha256((root/'source/source-mail.js').read_bytes()).hexdigest()=='4b95c15c1055891fe669fda0c5a267b7560597d01484315d401fcd33360e1099'
+assert hashlib.sha256((root/'source/source-mail.js').read_bytes()).hexdigest()=='a484eb88596a95907797f2996a9049b4c5b28276f07b832265ea4c75c653fef9'
 for forbidden in ['https://','http://','mailto:','localStorage','sessionStorage','indexedDB','XMLHttpRequest','WebSocket','fetch(','window.open(']:
     assert forbidden not in html+(root/'source/business-flow.js').read_text(),forbidden
 for directive in ["default-src 'none'","script-src 'self'","style-src 'self'","connect-src 'none'","img-src 'none'","frame-src 'none'","worker-src 'none'","form-action 'none'"]:

@@ -55,17 +55,17 @@ button:focus-visible,summary:focus-visible{outline:3px solid #e6a03b;outline-off
 <html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="{csp}">
-<title>TxSenser Email · 源邮件阅读示例</title><style>{css}</style></head>
+<title>TxSenser Email · 邮件阅读示例</title><style>{css}</style></head>
 <body><main>
-<div class="eyebrow">TXSENSER EMAIL</div><h1>源邮件阅读</h1>
+<div class="eyebrow">TXSENSER EMAIL</div><h1>阅读客户邮件</h1>
 <p class="intro">先读中文，再按需查看同一封邮件的英文原文和已提供的历史往来。</p>
 <p class="intro">当前是虚构示例，不连接真实邮箱。中文译文已预先提供。</p>
 <p class="intro"><a href="business.html">体验下一步：处理一件虚构客户询盘，判断回复并编辑英文草稿</a></p>
 <nav class="examples" aria-label="选择示例">
-<button type="button" data-example="0" aria-pressed="true">有源邮件的事项</button>
-<button type="button" data-example="1" aria-pressed="false">尚未提供源邮件的事项</button>
+<button type="button" data-example="0" aria-pressed="true">查看邮件示例</button>
+<button type="button" data-example="1" aria-pressed="false">暂无邮件内容的示例</button>
 </nav><div id="reader"></div>
-<footer>此页展示源邮件阅读这一项能力。不会读取、发送或保存真实业务数据。</footer>
+<footer>此页展示邮件阅读这一项能力。不会读取、发送或保存真实业务数据。</footer>
 </main><script>{script}</script></body></html>
 '''
     output = ROOT / 'preview/index.html'
