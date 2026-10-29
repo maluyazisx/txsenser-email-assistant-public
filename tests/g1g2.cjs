@@ -85,7 +85,7 @@ for(const state of ['missing','failed'])test('translation '+state+' stays explic
 });
 test('partial original downgrades claimed complete translation',()=>{
   const value=data();value.messages[0].original.status='partial';
-  const view=show(value);assert.ok(view.textContent.includes('原文仅部分可用'));assert.equal(view.querySelector('#source-mail-chinese').textContent,a.translation.text);
+  const view=show(value);assert.ok(view.textContent.includes('只读到部分邮件，中文内容可能不完整'));assert.equal(view.querySelector('#source-mail-chinese').textContent,a.translation.text);
 });
 test('wrong-source original disables unsafe viewing',()=>{
   const value=data();value.messages[0].original.source_id=b.source_id;
