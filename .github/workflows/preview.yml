@@ -25,6 +25,9 @@ jobs:
         run: |
           node tests/g1g2.cjs
           python -B tests/check_preview.py
+          node --check source/business-case.js
+          node --check source/business-flow.js
+          python -B tests/check_business.py
       - name: Prepare only the browser driver
         run: npm install --prefix "$RUNNER_TEMP/preview-driver" --no-save --ignore-scripts playwright@1.55.1
       - name: Add Chinese fonts to the disposable cloud runner
@@ -36,13 +39,18 @@ jobs:
         env:
           NODE_PATH: ${{ runner.temp }}/preview-driver/node_modules
           CHROME_PATH: /usr/bin/google-chrome
-        run: node tests/browser.cjs
+        run: |
+          node tests/browser.cjs
+          node tests/business-browser.cjs
       - name: Retain the preview and synthetic screenshots
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: email-synthetic-preview-${{ github.sha }}
           path: |
             preview/index.html
+            preview/business.html
+            test-results/business-desktop.png
+            test-results/business-narrow.png
             test-results/desktop.png
             test-results/narrow.png
           if-no-files-found: error
